@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/Vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<div id="wrapper">
+    <sum-box></sum-box>
+    <count-box1></count-box1>
+    <count-box2></count-box2>
+</div>
+    <script>
+        var hub = new Vue();
+        Vue.component('sum-box',{
+            data:function(){
+                return{
+                    num1:0,
+                    num2:0
+                }
+            },
+            template:`
+                <div>{{num1 + num2}}</div>
+            `,
+            mounted:function(){
+                hub.$on('event-box1',(num1)=>{
+                    this.num1 = num1;
+                });
+                hub.$on('event-box2',(num2)=>{
+                    this.num2 = num2;
+                });
+            }
+        })
+        Vue.component('count-box1',{
+            data:function(){
+                return{
+                    num1:0
+                }
+            },
+            template:`
+                <button @click="handle">{{num1}}</button>
+            `,
+            methods:{
+                handle:function(){
+                    this.num1++;
+                    hub.$emit('event-box1',this.num1);
+                }
+            }
+        })
+        Vue.component('count-box2',{
+            data:function(){
+                return{
+                    num2:0
+                }
+            },
+            template:`
+                <button @click="handle">{{num2}}</button>
+            `,
+            methods:{
+                handle:function(){
+                    this.num2++;
+                    hub.$emit('event-box2',this.num2);
+                }
+            }
+        })
+        var vm = new Vue({
+            el:'#wrapper'
+        })
+    </script>
+</body>
+</html>

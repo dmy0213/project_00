@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 导入 vue 文件 -->
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+</head>
+
+<body>
+    <!-- 被 vm 实例所控制的区域 -->
+    <div id="app">
+        <router-link to="/user/1">User1</router-link>
+        <router-link to="/user/2">User2</router-link>
+        <router-link :to="{name:'user',params:{id:3}}">User3</router-link>
+        <router-link to="/register">Register</router-link>
+        <!-- 路由占位符 -->
+        <router-view></router-view>
+    </div>
+    <script>
+        const User = {
+            props:['id','uname','age'],
+            template:'<h1>User组件 --- user的id为：{{id}} 年龄为：{{age}} 姓名为：{{uname}}</h1>'
+        }
+        const Register = {
+            template:`
+            <div>
+            <h1>Register组件</h1>
+            <hr/>
+            <router-link to="/register/tab1">Tab1</router-link>
+            <router-link to="/register/tab2">Tab2</router-link>
+            <router-view></router-view>
+            </div>
+            `
+        }
+        const tab1 = {
+            template:'<h3>Tab1组件</h3>'
+        }
+        const tab2 = {
+            template:'<h3>Tab2组件</h3>'
+        }
+        // 创建路由实例对象
+        const router = new VueRouter({
+            routes:[
+                //所有的路由规则
+                {path:'/',redirect:'/user'},
+                {path:'/user/:id',
+                component:User,
+                name:'user',
+                props:route=>({
+                    uname:'zs',
+                    age:20,
+                    id:route.params.id
+                })},
+                {path:'/register',component:Register,children:[
+                    {path:'/register/tab1',component:tab1},
+                    {path:'/register/tab2',component:tab2}
+                ]}
+            ]
+        })
+    //创建 vm 实例对象
+         var vm = new Vue({
+            //指定控制的区域
+            el : '#app',
+            data : {},
+            methods : {},
+            // 挂载路由实例对象
+            router:router
+        });
+    </script>
+</body>
+
+</html>

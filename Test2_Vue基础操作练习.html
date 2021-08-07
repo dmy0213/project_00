@@ -1,0 +1,142 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/Vue.js"></script>
+    <title>Document</title>
+    <style>
+        .total {
+            text-align: center;
+        }
+
+        ul .current {
+            background-color: red;
+        }
+        ul li{
+            border: 1px solid black;
+        }
+        ul li span:nth-child(2) {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="total">总价：￥{{sum}}</div>
+    <ul>
+        <li :key = 'item.id' :class='{current:list[index].isCurrent}' @click='handle(index)' v-for='(item,index) in list'><span>{{item.name}}</span>
+            <span>￥{{item.price}}</span></li>
+       </ul>
+</div>
+    <script>
+        var app = new Vue({
+            el: '.wrapper',
+            // iscurrent:false,
+            data: {
+                sum:0,
+                isCurrent:false,
+                list:[{
+                    id:0,
+                    name:'苹果',
+                    price:15,
+                    isCurrent:false,
+                },{
+                    id:1,
+                    name:'梨子',
+                    price:10,
+                    isCurrent:false,
+                },{
+                    id:2,
+                    name:'樱桃',
+                    price:22,
+                    isCurrent:false,
+                },{
+                    id:3,
+                    name:'西瓜',
+                    price:13,
+                    isCurrent:false,
+                }]
+            },
+            methods:{
+                handle:function(index){
+                   this.list[index].isCurrent = !this.list[index].isCurrent;
+                   if(this.list[index].isCurrent){
+                       this.sum += this.list[index].price;
+                   }else{
+                       this.sum -= this.list[index].price;
+                   }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/reset.css">
+    <script src="./js/Vue.js"></script>
+    <title>Document</title>
+    <style>
+        ul li {
+            height: 20px;
+            border-bottom: 1px solid black;
+            background-color: #cfa;
+            line-height: 20px;
+        }
+        ul li span{
+            width: 200px;
+            height: 100%;
+            background-color: red;
+            float: right;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input type="text"  @keyup.enter='addlis' v-model='val'>
+        <ul>
+            <li :key='item.id' v-for='(item,index) in list'>
+                {{list[index].content}}
+                <span @click='del(index)'>删除</span>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '.wrapper',
+            data: {
+                val:'',
+                num: 0,
+                list: []
+            },
+            methods: {
+                addlis: function () {
+                    this.list.push({
+                        id: this.num++,
+                        content:this.val
+                    });
+                    // console.log(this.list);
+                    // console.log(111);
+                },
+                del:function(index){
+                    this.list.splice(index,1);
+                    this.num--;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html> -->

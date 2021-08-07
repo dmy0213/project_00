@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/Vue.js"></script>
+    <title>Document</title>
+    <style>
+        tr,th,td{
+            border: 1px solid black;
+            text-align: center;
+            height: 30px;
+        }
+        select{
+            height: 100%;
+            width: 100%;
+            line-height: 100%;
+            border: none;
+        }
+        input{
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>用户名</th>
+            <th>年龄</th>
+            <th>毕业学校</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for='(item,index) in list'>
+            <td>{{item.uname}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.school}}</td>
+            <td>{{item.tips}}</td>
+            <td>
+                <a href="javascript:;" @click.prevent='change(index)'>修改</a>
+                <a href="javascript:;" @click.prevent='del(index)'>删除</a>
+            </td>
+        </tr>
+       
+        <tr>
+            <td><input type="text" v-model='uname'></td>
+            <td><input type="text" v-model='age'></td>
+            <td>
+                <select v-model='school'>
+                    <option value='中山小学'>中山小学</option>
+                    <option value='复兴中学'>复兴中学</option>
+                    <option value='光明小学'>光明小学</option>
+                </select>
+            </td>
+            <td><input type="text" v-model='tips'></td>
+            <td><button @click='save'>保存</button></td>
+        </tr>
+    </table>
+<!--     <script>
+        var vm = new Vue({
+            el: 'table',
+            data: {
+                list: [
+                    {
+                        uname: '小明',
+                        age: '18',
+                        school: '光明小学',
+                        tip: '三好学生',
+                    }, {
+
+                    }
+                ]
+            },
+            methods: {}
+        })
+    </script> -->
+<script>
+    var vm = new Vue({
+        el:'table',
+        data:{
+            changeFlag:false,
+            changeIndex:'',
+            schools:['中山小学','复兴小学','光明小学'],
+            uname:'',
+            age:'',
+            school:'',
+            tips:'',
+            list:[]
+        },
+        methods:{
+            // change:function(index){
+            //     console.log(this.list[index]);
+            // },
+            save:function(){
+                // console.log(this.uname,this.age,this.school,this.tips);
+                if(!this.changeFlag){
+                    var person = {};
+                    person.uname = this.uname;
+                    person.age = this.age;
+                    person.school = this.school;
+                    person.tips = this.tips;
+                    this.list.push(person);
+                }else{
+                    this.list[this.changeIndex].uname = this.uname;
+                    this.list[this.changeIndex].age = this.age;
+                    this.list[this.changeIndex].school = this.school;
+                    this.list[this.changeIndex].tips = this.tips;
+                }
+                this.uname='';
+                this.school='';
+                this.age='';
+                this.tips='';
+                this.changeFlag = false;
+            },
+            change:function(index){
+                this.uname=this.list[index].uname;
+                this.age=this.list[index].age;
+                this.school=this.list[index].school;
+                this.tips=this.list[index].tips;
+                this.changeFlag = true;
+                this.changeIndex = index;
+            },
+            del:function(index){
+                this.list.splice(index,1);
+            }
+        }
+    })
+</script>
+</body>
+</html>
