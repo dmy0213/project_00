@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/Vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="calculator">
+        <span>简单计算器</span>
+        <div>
+            <span>数字1</span>
+            <span><input type="text" v-model = 'a'></span>
+        </div>
+        <div>
+            <span>数字2</span>
+            <span><input type="text" v-model = 'b'></span>
+        </div>
+        <div>
+            <button v-on:click = 'handle'>计算</button>
+        </div>
+        <div>
+            <span>计算结果</span>
+            <span v-text = 'result'></span>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el:'#calculator',
+            data:{
+                a:'',
+                b:'',
+                result:''
+            },
+            methods:{
+                handle:function(){
+                    this.result = parseInt(this.a) + parseInt(this.b);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
